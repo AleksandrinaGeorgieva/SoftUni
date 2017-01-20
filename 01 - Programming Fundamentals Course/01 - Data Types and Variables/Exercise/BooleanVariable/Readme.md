@@ -1,6 +1,6 @@
-<h1>4.	Variable in Hexadecimal Format</h1>
+<h1>Boolean Variable</h1>
 </br>
-Write a program that reads a number in hexadecimal format (0x##) convert it to decimal format and prints it.
+Write a program that reads a string, converts it to Boolean variable and prints “Yes” if the variable is true and “No” if the variable is false.
 </br>
 <h4>Examples</h4>
 </br>
@@ -10,21 +10,15 @@ Write a program that reads a number in hexadecimal format (0x##) convert it to d
 		<th>Output</th>
 	</tr>
 	<tr>
-		<td>0xFE
+		<td>True
 		</td>
-		<td>254
-		</td>
-	</tr>
-	<tr>
-		<td>0x37
-		</td>
-		<td>55
+		<td>Yes
 		</td>
 	</tr>
 	<tr>
-		<td>0x10
+		<td>False
 		</td>
-		<td>16
+		<td>No
 		</td>
 	</tr>
 </table>
@@ -32,4 +26,4 @@ Write a program that reads a number in hexadecimal format (0x##) convert it to d
 </br>
 <h4>Hints</h4>
 </br>
-•	Use Convert.ToInt32(string, 16).
+•	Use Convert.ToBoolean(string).
