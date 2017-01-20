@@ -41,6 +41,6 @@ Calculate how many courses will be needed to elevate n persons by using an eleva
 </br>
 <h4>Hints</h4>
 </br>
-If you use types like float or double, the result will lose some of its precision. Also it might be printed in scientific notation.</br>
-You might use the decimal data type which holds real numbers with high precision with less loss.</br>
-Note that decimal numbers sometimes hold the unneeded zeroes after the decimal point, so 0m is different than 0.0m and 0.00000m.</br>
+•	You should divide n by p. This gives you the number of full courses (e.g. 17 / 3 = 5).</br>
+•	If n does not divide p without a remainder, you will need one additional partially full course (e.g. 17 % 3 = 2).</br>
+•	Another approach is to round up n / p to the nearest integer (ceiling), e.g. 17/3 = 5.67  rounds up to 6.</br> 
