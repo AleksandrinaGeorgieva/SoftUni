@@ -15,20 +15,20 @@ Write a program to read an integer n and for all numbers in the range 1…n to p
 			15
 		</td>
 		<td>
-			1 -> False
-			2 -> False
-			3 -> False
-			4 -> False
-			5 -> True
-			6 -> False
-			7 -> True
-			8 -> False
-			9 -> False
-			10 -> False
-			11 -> False
-			12 -> False
-			13 -> False
-			14 -> True
+			1 -> False</br>
+			2 -> False</br>
+			3 -> False</br>
+			4 -> False</br>
+			5 -> True</br>
+			6 -> False</br>
+			7 -> True</br>
+			8 -> False</br>
+			9 -> False</br>
+			10 -> False</br>
+			11 -> False</br>
+			12 -> False</br>
+			13 -> False</br>
+			14 -> True</br>
 			15 -> False
 		</td>
 	</tr>
