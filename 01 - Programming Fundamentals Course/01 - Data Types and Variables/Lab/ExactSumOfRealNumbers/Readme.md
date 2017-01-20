@@ -5,10 +5,10 @@ Write program to enter n numbers and calculate and print their exact sum (withou
 <h4>Examples</h4>
 </br>
 <table>
-	<th>
-		<td>Input</td>
-		<td>Output</td>
-	</th>
+	<tr>
+		<th>Input</th>
+		<th>Output</th>
+	</tr>
 	<tr>
 		<td>
 			3 </br>
@@ -22,10 +22,10 @@ Write program to enter n numbers and calculate and print their exact sum (withou
 	</tr>
 </table>
 <table>
-	<th>
-		<td>Input</td>
-		<td>Output</td>
-	</th>
+	<tr>
+		<th>Input</th>
+		<th>Output</th>
+	</tr>
 	<tr>
 		<td>
 			2 </br>
