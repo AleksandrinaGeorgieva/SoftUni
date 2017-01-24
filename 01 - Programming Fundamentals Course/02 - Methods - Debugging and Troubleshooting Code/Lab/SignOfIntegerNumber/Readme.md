@@ -1,4 +1,4 @@
-	<LI><H2 LANG="bg-BG" CLASS="western"><SPAN LANG="en-US">Sign of
+H2 LANG="bg-BG" CLASS="western"><SPAN LANG="en-US">Sign of
 	Integer Number</SPAN></H2>
 <P STYLE="margin-top: 0.06in">Create a method that prints the sign of
 an integer number n.</P>
