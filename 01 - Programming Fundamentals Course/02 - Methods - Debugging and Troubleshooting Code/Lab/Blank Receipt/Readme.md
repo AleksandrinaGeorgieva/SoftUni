@@ -1,26 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<STYLE TYPE="text/css">
-		@page { margin-left: 0.51in; margin-right: 0.51in; margin-top: 0.39in; margin-bottom: 0.55in }
-		P { margin-bottom: 0.08in; direction: ltr; widows: 2; orphans: 2 }
-		H1 { margin-top: 0.14in; margin-bottom: 0.03in; direction: ltr; color: #642d08; page-break-inside: avoid; widows: 2; orphans: 2 }
-		H1.western { font-family: "Calibri", serif; font-size: 20pt }
-		H1.cjk { font-size: 20pt }
-		H1.ctl { font-family: ; font-size: 16pt; font-weight: normal }
-		H2 { margin-top: 0.14in; margin-bottom: 0.03in; direction: ltr; color: #7c380a; page-break-inside: avoid; widows: 2; orphans: 2 }
-		H2.western { font-family: "Calibri", serif; so-language: bg-BG }
-		H2.cjk { font-family: "Arial" }
-		H2.ctl { font-family: ; font-weight: normal }
-		H3 { margin-top: 0.08in; margin-bottom: 0.03in; direction: ltr; color: #8f400b; page-break-inside: avoid; widows: 2; orphans: 2 }
-		H3.western { font-family: "Calibri", serif; font-size: 16pt }
-		H3.cjk { font-family: "Arial"; font-size: 16pt }
-		H3.ctl { font-family: ; font-size: 16pt; font-weight: normal }
-		A:link { color: #0000ff; so-language: zxx }
-	</STYLE>
-</HEAD>
-<BODY LANG="en-US" LINK="#0000ff" DIR="LTR">
 <H2 LANG="bg-BG" CLASS="western"><SPAN LANG="en-US">Blank
 	Receipt</SPAN></H2>
 <P STYLE="margin-top: 0.06in">Create a method that prints a blank
@@ -83,5 +60,3 @@ receipt.
 		</TD>
 	</TR>
 </TABLE>
-</body>
-</html>
