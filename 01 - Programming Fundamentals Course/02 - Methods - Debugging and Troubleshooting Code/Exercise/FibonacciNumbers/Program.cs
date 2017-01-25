@@ -12,7 +12,7 @@ namespace FibonacciNumbers
         {
             int a = 0;
             int b = 1;
-            int number = 0;
+            int number = 1;
             for (int i = 0; i < n; i++)
             {
                 number = a + b;
