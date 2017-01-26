@@ -13,11 +13,11 @@ namespace LastKNumbersSumsSequence
             int n = int.Parse(Console.ReadLine());
             int k = int.Parse(Console.ReadLine());
 
-            int[] array = new int[n];
+            long[] array = new long[n];
             array[0] = 1;
             for (int i = 1; i < n; i++)
             {
-                int sum = 0;
+                long sum = 0;
                 int len = i - k;
                 len = len < 0 ? 0 : len;
                 for (int j = array.Length-1; j >= len; j--)
