@@ -8,12 +8,12 @@ namespace Phonebook
 {
     class Program
     {
-        private static void AddContact (Dictionary<string, string> pBook, string name, string phone)
+        private static void AddContact (SortedDictionary<string, string> pBook, string name, string phone)
         {
             pBook[name] = phone;
         }
 
-        private static void SearchContact(Dictionary<string, string> pBook, string name)
+        private static void SearchContact(SortedDictionary<string, string> pBook, string name)
         {
             if (pBook.ContainsKey(name))
             {
@@ -24,9 +24,17 @@ namespace Phonebook
             }
         }
 
+        private static void ListContacts(SortedDictionary<string, string> pBook)
+        {
+            foreach (var item in pBook)
+            {
+                Console.WriteLine($"{item.Key} -> {item.Value}");
+            }
+        }
+
         static void Main(string[] args)
         {
-            var phonebook = new Dictionary<string, string>();
+            var phonebook = new SortedDictionary<string, string>();
             var input = Console.ReadLine()
                         .Split(' ')
                         .ToArray();
@@ -37,6 +45,7 @@ namespace Phonebook
                 {
                     case "a": AddContact(phonebook, input[1], input[2]); break;
                     case "s": SearchContact(phonebook, input[1]); break;
+                    case "listall": ListContacts(phonebook); break;
                 }
 
                 input = Console.ReadLine()
