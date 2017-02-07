@@ -26,10 +26,10 @@ namespace DragonArmy
             {
                 data[type] = new SortedDictionary<string, Dictionary<string, int>>();
             }
-            if (!data[type].ContainsKey(name))
-            {
+            //if (!data[type].ContainsKey(name))
+           // {
                 data[type][name] = defaultValues.ToDictionary(x => x.Key, x => x.Value);
-            }
+            //}
             /* try to parse the damage */
             if(int.TryParse(input[2], out tempInt)){
                 data[type][name]["damage"] = int.Parse(input[2]);
