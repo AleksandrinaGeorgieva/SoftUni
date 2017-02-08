@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace BookLibrary
 {
@@ -19,7 +20,11 @@ namespace BookLibrary
                 title = input[0],
                 author = input[1],
                 publisher = input[2],
-                date = input[3],
+                date = DateTime.ParseExact(
+                        input[3],
+                        "dd.MM.yyyy",
+                        CultureInfo.InvariantCulture
+                    ),                
                 ISBNNumber = input[4],
                 price = double.Parse(input[5])
             };
@@ -48,6 +53,16 @@ namespace BookLibrary
                 Console.WriteLine($"{author.Key} -> {author.Value:f2}");
             }
         }
+        /*print all titles released after given date ordered by date and then by title lexicographically. The date is given if format “day-month-year” at the last line in the input.*/
+        private static void PrintTitlesAfterDate(DateTime d)
+        {
+            var books = lib.books
+                .Where(x => x.date > d)
+                .OrderBy(x => x.date)
+                .ThenBy(x => x.title)
+                .ToList();
+            books.ForEach(x => Console.WriteLine($"{x.title} -> {x.date.ToString("dd.MM.yyyy")}"));
+        }
 
         static void Main(string[] args)
         {
@@ -59,7 +74,14 @@ namespace BookLibrary
                     .ToArray();
                 AddBook(input);
             }
-            PrintResults();
+            var dateString = Console.ReadLine();
+            var date = DateTime.ParseExact(
+                dateString,
+                "dd.MM.yyyy",
+                CultureInfo.InvariantCulture
+                );
+            //PrintResults();
+            PrintTitlesAfterDate(date);
         }
     }
 }
