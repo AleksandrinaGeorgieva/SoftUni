@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FootbalStandings
@@ -10,116 +11,97 @@ namespace FootbalStandings
     {
         private static string decryptionKey = "";
         private static Dictionary<string, Team> teams = new Dictionary<string, Team>();
+        private static Regex reg;
 
         private static void ExtractData(string input)
         {
-            //the first name
-            var firstIndex = input.IndexOf(decryptionKey);
-            var firstNameIndex = firstIndex + decryptionKey.Length;
-            var str = input.Substring(firstNameIndex);
-            var secondIndex = str.IndexOf(decryptionKey);
-            var name = str.Substring(0, secondIndex);
-            var firstName = new string(name.Reverse().ToArray());
-            firstName = firstName.Trim().ToUpper();
-            str = str.Substring(name.Length + decryptionKey.Length);
-
-            if (!teams.ContainsKey(firstName))
+            var matches = reg.Matches(input);
+            Team t;
+            var tempTeams = new List<string>();
+            foreach (Match m in matches)
             {
-                var t = new Team
+                var tName = m.Groups[1].Value
+                    .ToUpper()
+                    .Reverse()
+                    .ToArray();
+                var name = new string(tName);
+                if (!teams.ContainsKey(name))
                 {
-                    name = firstName,
-                    goals = 0,
-                    points = 0
-                };
-                teams.Add(firstName, t);
+                    t = new Team
+                    {
+                        name = name,
+                        goals = 0,
+                        points = 0
+                    };
+                    teams.Add(name, t);
+                }
+                tempTeams.Add(name);
             }
 
-            var lastIndex = str.LastIndexOf(decryptionKey);
-            str = str.Substring(0, lastIndex);
-            secondIndex = str.LastIndexOf(decryptionKey);
-            name = str.Substring(secondIndex + decryptionKey.Length);
-
-
-            var secondName = new string(name.Reverse().ToArray());
-            secondName = secondName.Trim().ToUpper();
-
-            if (!teams.ContainsKey(secondName))
+            var tempPoints = input
+                .Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries)
+                .Last()
+                .Split(':')
+                .ToArray();
+            var firstTeamPoints = int.Parse(tempPoints[0]);
+            var secondTeamPoints = int.Parse(tempPoints[1]);
+            teams[tempTeams[0]].goals += firstTeamPoints;
+            teams[tempTeams[1]].goals += secondTeamPoints; 
+            if (firstTeamPoints == secondTeamPoints)
             {
-                var t = new Team
-                {
-                    name = secondName,
-                    goals = 0,
-                    points = 0
-                };
-                teams.Add(secondName, t);
-            }
-
-            // extract goals
-
-            var splitted = input.Split(new[] { ' ', ':' }, StringSplitOptions.RemoveEmptyEntries);
-            var secondTeamGoals = long.Parse(splitted.Last());
-            var firstTeamGoals = long.Parse(splitted[splitted.Length - 2]);
-
-            teams[firstName].goals += firstTeamGoals;
-            teams[secondName].goals += secondTeamGoals;
-
-            if(firstTeamGoals == secondTeamGoals)
+                teams[tempTeams[0]].points++;
+                teams[tempTeams[1]].points++;
+            }else if(firstTeamPoints > secondTeamPoints)
             {
-                teams[firstName].points++;
-                teams[secondName].points++;
-            }
-            if(firstTeamGoals > secondTeamGoals)
+                teams[tempTeams[0]].points += 3;
+            }else
             {
-                teams[firstName].points += 3;
-            }
-            if (secondTeamGoals > firstTeamGoals)
-            {
-                teams[secondName].points += 3;
+                teams[tempTeams[1]].points += 3;
             }
         }
 
         private static void PrintStandings()
         {
-            Console.WriteLine("League standings:");
-            var teamsSorted = teams
+            var temp = teams
                 .OrderByDescending(x => x.Value.points)
                 .ThenBy(x => x.Key)
                 .ToDictionary(x => x.Key, x => x.Value);
-            int place = 1;
-            foreach (var team in teamsSorted)
+            int count = 1;
+            Console.WriteLine("League standings:");
+            foreach (var t in temp)
             {
-                Console.WriteLine($"{place}. {team.Key} {team.Value.points}");
-                place++;
+                Console.WriteLine($"{count}. {t.Key} {t.Value.points}");
+                count++;
             }
         }
 
         private static void PrintTop()
         {
             Console.WriteLine("Top 3 scored goals:");
-            var teamsSorted = teams.
-                OrderByDescending(x => x.Value.goals)
+            var temp = teams
+                .OrderByDescending(x => x.Value.goals)
                 .ThenBy(x => x.Key)
                 .Take(3)
                 .ToDictionary(x => x.Key, x => x.Value);
-
-            foreach (var team in teamsSorted)
+            foreach (var t in temp)
             {
-                Console.WriteLine($"- {team.Key} -> {team.Value.goals}");
+                Console.WriteLine($"- {t.Key} -> {t.Value.goals}");
             }
         }
 
         static void Main(string[] args)
         {
             decryptionKey = Console.ReadLine();
-
-            var input = Console.ReadLine();
-            while(input.ToLower() != "final")
+            var command = Console.ReadLine();
+            var regEsc = Regex.Escape(decryptionKey);
+            reg = new Regex(regEsc + @"(.*?)" + regEsc);
+            while (command.ToLower() != "final")
             {
-                ExtractData(input);
-                input = Console.ReadLine();
+                ExtractData(command);
+                command = Console.ReadLine();
             }
             PrintStandings();
             PrintTop();
         }
-}
+    }
 }
