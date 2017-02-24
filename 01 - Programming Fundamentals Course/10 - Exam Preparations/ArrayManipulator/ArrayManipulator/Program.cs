@@ -8,218 +8,98 @@ namespace ArrayManipulator
 {
     class Program
     {
-        private static int[] arr = new int[1];
+        private static List<int> array = new List<int>();
 
-        private static void Exchange(string input)
+        private static void Exchange(int index)
         {
-            var splitted = input.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-            int index = int.Parse(splitted[1]);
-            if(index < 0 || index >= arr.Length)
+            if (index < array.Count && index > -1)
+            {
+                var temp = array.GetRange(0, index + 1);
+                array.RemoveRange(0, index + 1);
+                array.AddRange(temp);
+            }
+            else
             {
                 Console.WriteLine("Invalid index");
+            }
+
+        }
+
+        private static void GetMinOrMax(string type, string remainderType)
+        {
+            int remainder = remainderType == "even" ? 0 : 1;
+            var tempValues = array
+                .Where(x => x % 2 == remainder)
+                .ToList();
+            if(tempValues.Count == 0)
+            {
+                Console.WriteLine("No matches");
                 return;
             }
-
-            var newArr = new List<int>();
-
-            for (int i = index + 1; i < arr.Length; i++)
-            {
-                newArr.Add(arr[i]);
-            }
-            for (int i = 0; i <= index; i++)
-            {
-                newArr.Add(arr[i]);
-            }
-            arr = newArr.ToArray();
+            int num = type == "max" ? tempValues.Max() : tempValues.Min();
+            int index = array.LastIndexOf(num);
+            Console.WriteLine(index);       
         }
 
-        private static void MaxOdd(string input)
+        private static void GetFirstOrLast(string type, string remainderType, int count)
         {
-            try
-            {
-                var max = arr.Where(x => x % 2 == 1).Max();
-                var index = arr.ToList().LastIndexOf(max);
-                Console.WriteLine(index);
-            }
-            catch
-            {
-                Console.WriteLine("No matches");
-            }            
-        }
-
-        private static void MaxEven(string input)
-        {
-
-            try
-            {
-                var max = arr.Where(x => x % 2 == 0).Max();
-                 var index = arr.ToList().LastIndexOf(max);
-                Console.WriteLine(index);
-            }catch
-            {
-                Console.WriteLine("No matches");
-            }
-        }
-
-        private static void MinOdd(string input)
-        {
-            try
-            {
-                var min = arr.Where(x => x % 2 == 1).Min();
-                var index = arr.ToList().LastIndexOf(min);
-                Console.WriteLine(index);
-            }
-            catch
-            {
-                Console.WriteLine("No matches");
-            }
-        }
-
-        private static void MinEven(string input)
-        {
-
-            try
-            {
-                var min = arr.Where(x => x % 2 == 0).Min();
-                var index = arr.ToList().LastIndexOf(min);
-                Console.WriteLine(index);
-            }
-            catch
-            {
-                Console.WriteLine("No matches");
-            }
-        }
-
-        private static void FirstEven(string input)
-        {
-            var splitted = input
-                .Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-            int count = int.Parse(splitted[1]);
-            if(count > arr.Length)
+            if(count > array.Count)
             {
                 Console.WriteLine("Invalid count");
                 return;
             }
-            var even = arr
-                .Where(x => x % 2 == 0)
-                .Take(count)
-                .ToArray();
-            Console.WriteLine("[" + string.Join(", ", even) + "]");
-        }
-
-        private static void FirstOdd(string input)
-        {
-            var splitted = input
-                .Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-            int count = int.Parse(splitted[1]);
-            if (count > arr.Length)
+            int remainder = remainderType == "even" ? 0 : 1;
+            var tempValues = array
+                .Where(x => x % 2 == remainder)
+                .ToList();
+            if(type == "first")
             {
-                Console.WriteLine("Invalid count");
-                return;
-            }
-            var odd = arr
-                .Where(x => x % 2 == 1)
-                .Take(count)
-                .ToArray();
-            Console.WriteLine("[" + string.Join(", ", odd) + "]");
-        }
-
-        private static void LastOdd(string input)
-        {
-            var splitted = input
-                .Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-            int count = int.Parse(splitted[1]);
-            if (count > arr.Length)
+                tempValues = tempValues
+                    .Take(count)
+                    .ToList();
+            }else
             {
-                Console.WriteLine("Invalid count");
-                return;
+                int skip = Math.Max(0, tempValues.Count - count);
+                tempValues = tempValues
+                    .Skip(skip)
+                    .Take(count)
+                    .ToList();
             }
-            var odd = arr
-                .Where(x => x % 2 == 1)
-                .Reverse()
-                .Take(count)
-                .Reverse()
-                .ToArray();
-            Console.WriteLine("[" + string.Join(", ", odd) + "]");
-        }
-
-        private static void LastEven(string input)
-        {
-            var splitted = input
-                .Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-            int count = int.Parse(splitted[1]);
-            if (count > arr.Length)
-            {
-                Console.WriteLine("Invalid count");
-                return;
-            }
-            var even = arr
-                .Where(x => x % 2 == 0)
-                .Reverse()
-                .Take(count)
-                .Reverse()
-                .ToArray();
-            Console.WriteLine("[" + string.Join(", ", even) + "]");
+            Console.WriteLine($"[{string.Join(", ", tempValues)}]");
         }
 
         static void Main(string[] args)
         {
-            arr = Console.ReadLine()
-                .Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries)
+            array = Console.ReadLine()
+                .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(int.Parse)
-                .ToArray();
-
-            var input = Console.ReadLine();
-            while(input.ToLower() != "end")
+                .ToList();
+            string commandType;
+            int tmpNumber;
+            var command = Console.ReadLine();
+            while(command.ToLower() != "end")
             {
-                if (input.Contains("exchange"))
+                var splitted = command.Split(' ');
+                commandType = splitted[0];
+
+                switch (commandType)
                 {
-                    Exchange(input);
-                }
-                if(input.Contains("max") && input.Contains("odd"))
-                {
-                    MaxOdd(input);
-                }
-                if (input.Contains("max") && input.Contains("even"))
-                {
-                    MaxEven(input);
-                }
-                if (input.Contains("min") && input.Contains("odd"))
-                {
-                    MinOdd(input);
-                }
-                if (input.Contains("min") && input.Contains("even"))
-                {
-                    MinEven(input);
+                    case "exchange":
+                        tmpNumber = int.Parse(splitted[1]);
+                        Exchange(tmpNumber);
+                        break;
+                    case "max": 
+                    case "min": GetMinOrMax(commandType, splitted[1]); break;
+                    case "first":
+                    case "last":
+                        tmpNumber = int.Parse(splitted[1]);
+                        GetFirstOrLast(commandType, splitted[2], tmpNumber);
+                        break;
                 }
 
-                if (input.Contains("first"))
-                {
-                    if (input.Contains("even"))
-                    {
-                        FirstEven(input);
-                    }
-                    if (input.Contains("odd"))
-                    {
-                        FirstOdd(input);
-                    }
-                }
-
-                if (input.Contains("last"))
-                {
-                    if (input.Contains("even"))
-                    {
-                        LastEven(input);
-                    }
-                    if (input.Contains("odd"))
-                    {
-                        LastOdd(input);
-                    }
-                }
-
-                input = Console.ReadLine();
+                command = Console.ReadLine();
             }
-            Console.WriteLine("[" + string.Join(", ", arr) + "]");
+            Console.WriteLine($"[{string.Join(", ", array)}]");
         }
     }
 }
