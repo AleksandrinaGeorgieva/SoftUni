@@ -1,0 +1,14 @@
+.bordered{
+	background-color: #ded7d7;
+	border-radius: 8px;
+	text-align: center;
+}
+.redBorder{
+	border: red 3px solid;
+}
+.greenBorder{
+	border: green 3px solid;
+}
+.blueBorder{
+	border: blue 3px solid;
+}
