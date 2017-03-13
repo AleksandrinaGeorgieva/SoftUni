@@ -16,8 +16,8 @@ namespace ReverseNumbersWithAStack
                 .Select(int.Parse)
                 .ToArray();
 
-            var queue = new Stack<int>(numbers);
-            Console.WriteLine(string.Join(" ", queue));
+            var stack = new Stack<int>(numbers);
+            Console.WriteLine(string.Join(" ", stack));
         }
     }
 }
