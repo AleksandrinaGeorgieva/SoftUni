@@ -13,3 +13,18 @@ function PrintFromNToOne(arr){
         console.log(i);
     }
 }
+
+function printLines(arr){
+    for(let i = 0; i < arr.length; i++){
+        if(arr[i] == "Stop"){
+            return;
+        }
+        console.log(arr[i]);
+    }
+}
+
+function printNumbersInReversedOrder(arr){
+    for(let i = arr.length - 1; i >= 0; i--){
+        console.log(arr[i]);
+    }
+}
