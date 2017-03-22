@@ -28,3 +28,19 @@ function printNumbersInReversedOrder(arr){
         console.log(arr[i]);
     }
 }
+
+/* set values to indexes in an array */
+function fillArray(arr){
+    let n = Number(arr[0]);
+    let numbers = new Array(n)
+        .fill(0);
+    for(let i = 1; i < arr.length; i++){
+        let splitted = arr[i]
+            .split(' - ')
+            .map(Number);
+        numbers[splitted[0]] = splitted[1];
+    }
+    for(let i = 0; i < n; i++){
+        console.log(numbers[i]);
+    }
+}
