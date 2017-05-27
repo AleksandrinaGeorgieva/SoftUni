@@ -8,9 +8,10 @@ namespace BashSoft
 {
     class Launcher
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            IOManager.TraverseDirectory(@"E:\SoftUni\03 - C# Advanced\BashSoft");
+            StudentsRepository.InitializeData();
+            StudentsRepository.GetStudentScoresFromCourse("Unity", "Ivan");
         }
     }
 }
