@@ -9,15 +9,15 @@ namespace PeriodicTable
         {
             var data = new SortedSet<string>();
             int n = int.Parse(Console.ReadLine());
-            int counter = n;
-            while (counter-- != 0)
+            for (int i = 0; i < n; i++)
             {
-                var input = Console.ReadLine()
-                    .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                var t = new HashSet<string>(input);
-                data.UnionWith(t);
+                var input = Console.ReadLine().Split();
+                for (int j = 0; j < input.Length; j++)
+                {
+                    data.Add(input[j]);
+                }
             }
-
+            
             foreach (var item in data)
             {
                 Console.Write($"{item} ");
