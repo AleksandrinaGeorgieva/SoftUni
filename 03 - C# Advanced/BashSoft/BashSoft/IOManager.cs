@@ -27,17 +27,17 @@ namespace BashSoft
                 }
 
                 OutputWriter.WriteMessageOnNewLine(string.Format("{0}{1}", new string('-', identation), currentPath));
-
-                foreach (var file in Directory.GetFiles(currentPath))
-                {
-                    int indexOfLastSlash = file.LastIndexOf("\\");
-                    string fileName = file.Substring(indexOfLastSlash);
-                    OutputWriter.WriteMessageOnNewLine(new string('-', indexOfLastSlash) + fileName);
-                }
-
+                
                 try
                 {
-                    foreach(string directoryPath in Directory.GetDirectories(currentPath))
+                    foreach (var file in Directory.GetFiles(currentPath))
+                    {
+                        int indexOfLastSlash = file.LastIndexOf("\\");
+                        string fileName = file.Substring(indexOfLastSlash);
+                        OutputWriter.WriteMessageOnNewLine(new string('-', indexOfLastSlash) + fileName);
+                    }
+
+                    foreach (string directoryPath in Directory.GetDirectories(currentPath))
                 {
                         subFolders.Enqueue(directoryPath);
                     }
@@ -52,17 +52,31 @@ namespace BashSoft
         public static void CreateDirectoryInCurrentFolder(string name)
         {
             string path = Directory.GetCurrentDirectory() + "\\" + name;
-            Directory.CreateDirectory(path);
+            try
+            {
+                Directory.CreateDirectory(path);
+            }
+            catch (ArgumentException)
+            {
+                OutputWriter.DisplayException(ExceptionMessages.ForbiddenSymbolsContainedInName);
+            }
         }
 
         public static void ChangeCurrentDirectoryRelative(string relativePath)
         {
             if(relativePath == "..")
             {
-                string currentPath = SessionData.currentPath;
-                int indexOfLastSlash = currentPath.LastIndexOf("\\");
-                string newPath = currentPath.Substring(0, indexOfLastSlash);
-                SessionData.currentPath = newPath;
+                try
+                {
+                    string currentPath = SessionData.currentPath;
+                    int indexOfLastSlash = currentPath.LastIndexOf("\\");
+                    string newPath = currentPath.Substring(0, indexOfLastSlash);
+                    SessionData.currentPath = newPath;
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    OutputWriter.DisplayException(ExceptionMessages.UnableToGoHigherInPartitionHierarchy);
+                }
             }else
             {
                 string currentPath = SessionData.currentPath;
