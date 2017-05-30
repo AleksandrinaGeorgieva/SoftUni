@@ -10,8 +10,10 @@ namespace BashSoft
     {
         static void Main()
         {
-            StudentsRepository.InitializeData();
-            StudentsRepository.GetStudentScoresFromCourse("Unity", "Ivan");
+            //StudentsRepository.InitializeData();
+            //StudentsRepository.GetStudentScoresFromCourse("Unity", "Ivan");
+            //Tester.CompareContent(@"..\test2.txt", @"..\test3.txt");
+            IOManager.TraverseDirectory(1);
         }
     }
 }
